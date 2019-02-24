@@ -4,8 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import cn.e3mall.mapper.UserMapper;
 import cn.e3mall.pojo.User;
+import cn.e3mall.pojo.UserExample;
 import cn.e3mall.service.UserService;
 import cn.e3mall.until.PastureResult;
 
@@ -174,6 +179,34 @@ public class UserServiceImpl implements UserService {
 			}else {
 				pastureResult.setMessage("删除失败");
 			}
+		}catch (Exception e) {
+			pastureResult.setMessage("服务器出错");
+			pastureResult.setStatus(500);
+		}
+		return pastureResult;
+	}
+
+	/*
+	 * （非 Javadoc）
+	 * @see cn.e3mall.service.UserService#pagingGetUser()
+	 * 分页查询user
+	 */
+	@Override
+	public PastureResult pagingGetUser(String page, String rows) {
+		PastureResult pastureResult = new PastureResult();
+		List<User> userList = null;
+		try {
+			// 设置分页信息， 第几页，一页多少
+			PageHelper.startPage(1, 10);
+			UserExample userExample = new UserExample();
+			userList = UserMapper.selectByExample(userExample);
+			PageInfo<User> pageInfo = new PageInfo<>(userList);
+			pastureResult.setMessage("查询成功");
+			pastureResult.setStatus(0);
+			pastureResult.setData(userList);
+			System.out.println(userList.size());
+			System.out.println(userList.get(0).getUsername());
+			
 		}catch (Exception e) {
 			pastureResult.setMessage("服务器出错");
 			pastureResult.setStatus(500);

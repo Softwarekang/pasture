@@ -11,4 +11,5 @@ public interface UserService {
 	PastureResult getUserByManLocation(String manLocation);
 	PastureResult updateUserInfo(String id,String userName,String passWord,String manlocation,String phoneNumber);
 	PastureResult deleteUserById(String id);
+	PastureResult pagingGetUser(String page, String rows);
 }

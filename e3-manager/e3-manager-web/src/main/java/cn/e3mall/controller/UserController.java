@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.e3mall.mapper.UserMapper;
 import cn.e3mall.service.UserService;
 import cn.e3mall.until.PastureResult;
 
@@ -87,6 +89,15 @@ public class UserController {
 	@ResponseBody
 	public PastureResult deleteUser(String id) {
 		return UserService.deleteUserById("1");
+	}
+	
+	/*
+	 * 用户进行分页查询
+	 */
+	@RequestMapping("/pagingGetUser")
+	@ResponseBody
+	public PastureResult pagingGetUser(String page, String rows) {
+		return UserService.pagingGetUser(page,rows);
 	}
 }  
 
